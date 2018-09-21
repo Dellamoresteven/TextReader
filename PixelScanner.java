@@ -10,20 +10,22 @@ class PixelScanner {
 		startscan();
 	}
 	private void startscan(){
+		RecursiveExpansion recursiveexpansion = new RecursiveExpansion();
 		PixelValue pixel;
 		boolean first = false;
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
 				pixel = new PixelValue(image, i, j);
 				if((pixel.getRed() <= findthreshhold()) && (first == false)){
+					recursiveexpansion.FindLetter(i, j);
 					pixel = new PixelValue(image, i, j-1);
-					pixel.setRGB();
+					pixel.setRGB("Green");
 					first = true;
 				}else if(pixel.getRed() > findthreshhold()){
 					try{
 						if (first == true) {
 							pixel = new PixelValue(image, i, j);
-							pixel.setRGB();
+							pixel.setRGB("Green");
 						}
 					}catch(Exception e){}
 					first = false;
@@ -37,18 +39,17 @@ class PixelScanner {
 				pixel = new PixelValue(image, j, i);
 				if((pixel.getRed() <= findthreshhold()) && (first == false)){
 					pixel = new PixelValue(image, j-1, i);
-					pixel.setRGB();
+					pixel.setRGB("Green");
 					first = true;
 				}else if(pixel.getRed() > findthreshhold()){
 					try{
 						if(first == true){
 							pixel = new PixelValue(image, j, i);
-							pixel.setRGB();
+							pixel.setRGB("Green");
 						}
 					}catch(Exception e){}
 					first = false;
 				}
-
 			}
 		}
 	}

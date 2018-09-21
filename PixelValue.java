@@ -33,11 +33,31 @@ class PixelValue {
 	public int getBlue(){
 		return (RGBnum & 0xff);
 	}
-	public void setRGB(){
+	public void setRGB(String color){
 		int a = 255;
 	    int r = 120;
 	    int g = 255;
 	    int b = 0;
+		switch(color){
+			case "White":
+				a = 255;
+				r = 255;
+				g = 255;
+				b = 255;
+				break;
+			case "Green":
+				a = 255;
+	    		r = 120;
+	   			g = 255;
+	   			b = 0;
+	   			break;
+	   		case "Black":
+	   			a = 255;
+	   			r = 0;
+	   			g = 0;
+	   			b = 0;
+	   			break;
+		}
     	RGBnum = (a<<24) | (r<<16) | (g<<8) | b;
 		image.setRGB(this.row,this.col, RGBnum); 
 	}
