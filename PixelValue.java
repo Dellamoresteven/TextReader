@@ -57,6 +57,12 @@ class PixelValue {
 	   			g = 0;
 	   			b = 0;
 	   			break;
+	   		case "Red":
+	   			a = 255;
+	   			r = 255;
+	   			g = 0;
+	   			b = 0;
+	   			break;
 		}
     	RGBnum = (a<<24) | (r<<16) | (g<<8) | b;
 		image.setRGB(this.row,this.col, RGBnum); 
