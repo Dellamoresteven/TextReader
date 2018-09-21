@@ -12,7 +12,7 @@ class RecursiveExpansion {
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {
 				pixel = new PixelValue(newimage, i, j);
-				pixel.setRGB("White");
+				pixel.setRGB("White"); //sets new picture to all white
 			}
 		}
 		try{
