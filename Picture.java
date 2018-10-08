@@ -7,8 +7,6 @@ import javax.imageio.ImageIO;
 class Picture {
 
 	public static void main(String[] args) {
-		// Scanner scan = new Scanner(System.in)
-		// System.out.println("Upload a picture");
 		File pic;
 		BufferedImage imag;
 		String name = "picture.jpg";
