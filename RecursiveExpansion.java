@@ -6,13 +6,18 @@ import javax.imageio.ImageIO;
 class RecursiveExpansion {
 	BufferedImage oldimage;
 	BufferedImage newimage;
-	RecursiveExpansion(BufferedImage oldimage){
+	int[][] mask;
+	int objCount;
+	RecursiveExpansion(BufferedImage oldimage, int [][] mask, int objCount){
 		this.oldimage = oldimage;
 		newimage = oldimage;
+		this.mask = mask;
+		this.objCount = objCount;
 		// newimage = CreateNewImage();
 	}
-	public void FindLetter(int row, int col, int threshhold){
-		FindSize(row,col,threshhold);
+	public int[][] FindLetter(int row, int col){
+		FindSize(row,col);
+		return mask;
 		// PixelValue pixel = new PixelValue(newimage, row, col);
 		// if(pixel.getRed() == 255){
 		// 	return;
@@ -24,49 +29,27 @@ class RecursiveExpansion {
 	int bot = 0;
 	int left = 0;
 	int right = 0;
-	public void FindSize(int row, int col, int threshhold){
-		PixelValue pixel = new PixelValue(newimage, row, col);
-		if((pixel.getRed() == 255) || (pixel.getRed() >= threshhold)){
+	public void FindSize(int row, int col){
+		PixelValue pixel;
+		try{
+			pixel = new PixelValue(newimage, row, col);
+		}catch(Exception e){
+			System.out.println("FEFAWFEAW");
+		}
+		if(mask[row][col] != 0){
 			return;
 		}
-		pixel.setRGB("Red");
-		try{
-			FindSize(row - 1, col, threshhold);
-			FindSize(row + 1, col, threshhold);
-			FindSize(row, col + 1, threshhold);
-			FindSize(row, col - 1, threshhold);
+		mask[row][col] = objCount;
+		FindSize(row - 1, col);
+		FindSize(row + 1, col);
+		FindSize(row, col + 1);
+		FindSize(row, col - 1);
 			// FindSize(row + 1, col + 1, threshhold);
 			// FindSize(row + 1, col - 1, threshhold);
 			// FindSize(row - 1, col + 1, threshhold);
 			// FindSize(row - 1, col - 1, threshhold);
-		}catch(Exception e){
-
-		}
-
 	}
-	private void AddToPicture(){
 
-	}
-	private void ResizePicture(){
-
-	}
-	public BufferedImage CreateNewImage(){
-		// PixelValue pixel;
-		// BufferedImage newimag = new BufferedImage(5000,5000,1); //Create new image
-		// for (int i = 0; i < 5000; i++) {
-		// 	for (int j = 0; j < 5000; j++) {
-		// 		pixel = new PixelValue(newimag, i, j);
-		// 		pixel.setRGB("White"); //sets new picture to all white
-		// 	}
-		// }
-		try{
-			File pic = new File("test/NewImage ");
-	      	ImageIO.write(newimage, "jpg", pic);
-	     }catch(Exception e){
-	     	System.out.println("Could not create new file in RecursiveExpansion");
-	     }
-	     return newimage;
-	}
 }
 
 

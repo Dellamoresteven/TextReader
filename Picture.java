@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 class Picture {
-
+	
 	public static void main(String[] args) {
 		File pic;
 		BufferedImage imag;
