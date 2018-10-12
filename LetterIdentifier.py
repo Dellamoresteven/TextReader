@@ -1,5 +1,5 @@
 import numpy as np 
-
+#THIS IS STEVENS CODE BACK OFF U LOZER
 # This will do things my dude
 IMG_SIZE = 150
 TRAIN_DIR = 'PATH TO TRAIN DIR'
