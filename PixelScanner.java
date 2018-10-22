@@ -22,14 +22,16 @@ class PixelScanner {
 				currentPixel = new PixelValue(image,i,j);
 				if((mask[i][j] == 0)){
 					if((threshhold(currentPixel,lastPixel))){
+						System.out.printf("%d ", objnum);
 						mask[i][j] = objnum++;
 					}else{
 						lastPixel = currentPixel;
 					}
+					// lastPixel = currentPixel;
 				}
 			}
 		}
-		printMask();
+		// printMask();
 
 
 
@@ -74,7 +76,6 @@ class PixelScanner {
 	private void printMask(){
 		for (int i = 0;i <  image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
-
 				System.out.printf("%d ", mask[i][j]);
 			}
 		}

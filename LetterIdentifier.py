@@ -1,6 +1,11 @@
 import numpy as np 
 #THIS IS STEVENS CODE BACK OFF U LOZER
 # This will do things my dude
+
+# if(pythonsucks){
+# 	./rm -rf Python4/*;
+# }
+
 IMG_SIZE = 150
 TRAIN_DIR = 'PATH TO TRAIN DIR'
 VALIDATE_DIR = 'PATH TO VALIDATE DIR'
