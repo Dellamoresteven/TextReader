@@ -9,7 +9,7 @@ class Picture {
 	public static void main(String[] args) {
 		File pic;
 		BufferedImage imag;
-		String name = "picture.jpg";
+		String name = "testpic1.jpeg";
 		try{
 			pic = new File(name);
 			imag = ImageIO.read(pic);
@@ -18,11 +18,11 @@ class Picture {
 			return;
 		}
 		PixelScanner pixelscanner = new PixelScanner(imag);
-		try{
-      		pic = new File("test/Modified " + name);
-      		ImageIO.write(imag, "jpg", pic);
-    	}catch(IOException e){
-      		System.out.println(e);
-    	}
+		// try{
+  //     		pic = new File("test/Modified " + name);
+  //     		ImageIO.write(imag, "jpg", pic);
+  //   	}catch(IOException e){
+  //     		System.out.println(e);
+  //   	}
 	}
 }
