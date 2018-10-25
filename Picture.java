@@ -9,7 +9,7 @@ class Picture {
 	public static void main(String[] args) {
 		File pic;
 		BufferedImage imag;
-		String name = "testpic1.jpeg";
+		String name = "picture.jpg";
 		try{
 			pic = new File(name);
 			imag = ImageIO.read(pic);
