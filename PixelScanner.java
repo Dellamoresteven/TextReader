@@ -189,7 +189,7 @@ class PixelScanner {
 			}
 			//SEND TO RICHARD HERE
 		}
-		
+
 	}
 }
 
