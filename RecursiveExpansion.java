@@ -39,7 +39,7 @@ class RecursiveExpansion {
 		for (int i = 0;i <  oldimage.getWidth(); i++) {
 			for (int j = 0; j < oldimage.getHeight(); j++) {
 
-				System.out.printf("%d ", mask[i][j]);
+				// System.out.printf("%d ", mask[i][j]);
 			}
 		}
 	}
@@ -89,17 +89,9 @@ class RecursiveExpansion {
 			// FindSize(row - 1, col - 1, threshhold);
 	}
 	public boolean threshholds(PixelValue pixel){ //return true if there is a new color, false otherwise
-		int r = Math.abs(pixel.getRed() - lastpixel.getRed());
-		int b = Math.abs(pixel.getBlue() - lastpixel.getBlue());
-		int g = Math.abs(pixel.getGreen() - lastpixel.getGreen());
-
-		if((r >= 80) || (b >= 80) || (g >= 80)){
-			// System.out.println("TRUE" + r + ":" + b + ":" + g);
-			// System.out.println(r + ":" + b + ":" + g);
-			return true;
-		}
-		// System.out.println("FALSE" + r + ":" + b + ":" + g);
-		return false;
+		if(pixel.getRGB() == -16777216)
+			return false;
+		return true;
 	}
 
 }

@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import java.awt.Graphics;
 
 class Picture {
 	
@@ -19,10 +20,16 @@ class Picture {
 		}
 		PixelScanner pixelscanner = new PixelScanner(imag);
 		// try{
-  //     		pic = new File("test/Modified " + name);
-  //     		ImageIO.write(imag, "jpg", pic);
-  //   	}catch(IOException e){
-  //     		System.out.println(e);
-  //   	}
+		// 	pic = new File("YTESFA");
+		// 	BufferedImage newImage = new BufferedImage(imag.getWidth(), imag.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+
+		// 	Graphics g = newImage.createGraphics();
+		// 	g.drawImage(imag, 0, 0, imag.getWidth(), imag.getHeight(), null);
+		// 	g.dispose();
+		// 	ImageIO.write(newImage, "jpg", pic);
+		// }catch(Exception e){
+		// 	System.out.println("WHTF");
+		// }
+
 	}
 }

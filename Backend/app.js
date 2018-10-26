@@ -16,7 +16,7 @@ var helloRouter = require('./routes/hello');
 
 
 var app = express();
-app.set('port', 8000);
+app.set('port', 6969);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

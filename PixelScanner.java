@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Graphics;
 
 //Steven Dellamore
 class PixelScanner {
@@ -22,69 +23,11 @@ class PixelScanner {
 		mask = new int[image.getWidth()][image.getHeight()];
 		startscan();
 	}
-	// private int check(int i, int j){
-	// 	// System.out.println(i + ":" + j);
-	// 	if(mask[i+1][j] != 0){
-	// 		return mask[i+1][j];
-	// 	}
-	// 	else if(mask[i-1][j] != 0){
-	// 		return mask[i-1][j];
-	// 	}
-	// 	else if(mask[i][j+1] != 0){
-	// 		return mask[i][j+1];
-	// 	}
-	// 	else if(mask[i][j-1] != 0){
-	// 		return mask[i][j-1];
-	// 	}
-	// 	else if(mask[i+1][j+1] != 0){
-	// 		return mask[i+1][j+1];
-	// 	}
-	// 	else if(mask[i-1][j-1] != 0){
-	// 		return mask[i-1][j-1];
-	// 	}
-	// 	else if(mask[i+1][j-1] != 0){
-	// 		return mask[i+1][j-1];
-	// 	}
-	// 	else if(mask[i-1][j+1] != 0){
-	// 		return mask[i-1][j+1];
-	// 	}
-	// 	System.out.println(i + ":" + j);
-	// 	return objnum++; 
-	// }
+
 	private void startscan(){
-		// PixelValue currentPixel = new PixelValue(image,0,0);
-		// PixelValue lastPixel = new PixelValue(image,0,0);
-		// boolean threshholdcounter = false;
-		// // int objnum = 0;
-		// for (int i = 0; i < image.getWidth(); i++) {
-		// 	for(int j = 0; j < image.getHeight(); j++){
-		// 		currentPixel = new PixelValue(image,i,j);
-		// 		if(threshhold(currentPixel, lastPixel)){
-		// 			if(!threshholdcounter){
-		// 				mask[i][j] = check(i,j);
-		// 				threshholdcounter = true;
-		// 				oldObjNum = objnum;
-		// 			}else{
-		// 				oldObjNum = 0;
-		// 				threshholdcounter = false;
-		// 			}
-		// 		}
-		// 		mask[i][j] = oldObjNum;
-		// 		lastPixel = currentPixel;
-		// 	}
-		// 	lastPixel = new PixelValue(image,i,0);
-		// }
-		// System.out.println(objnum);
-		// printMask();
-
-
-
-
 		PixelValue pixel;
-		PixelValue lastPixel = new PixelValue(image,0,0);
-		// System.out.println("FIRSt - RED:" + lastPixel.getRed() + " GREEN:" + lastPixel.getGreen() + " BLUE:" + lastPixel.getBlue());
-
-		// currentpixel = pixel;
+		threshholdimage(image);
+		
 		boolean first = false;
 		int objCount = 1;
 		// System.out.printf("%d:%d\n", testpixle.getRed(), testpixle2.getRed());
@@ -92,10 +35,13 @@ class PixelScanner {
 		int thresholdcount = 0;
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
+
 				pixel = new PixelValue(image,i,j);
+				// System.out.println(pixel.getRGB());
 				if((mask[i][j] == 0)){
 					if(thresholdcount == 0){
-						if((mask[i][j] == 0) && (threshhold(pixel, lastPixel))){
+						if(threshhold(pixel)){
+							// System.out.println(i+":"+j);
 							RecursiveExpansion recursiveExpansion = new RecursiveExpansion(image, mask, objCount++);
 							mask = recursiveExpansion.FindLetter(i,j);
 							RecObjHolder.add(recursiveExpansion);
@@ -107,7 +53,6 @@ class PixelScanner {
 					}else{
 						thresholdcount = 0;
 					}
-					lastPixel = pixel;
 				}else{
 					thresholdcount = 1;
 				}
@@ -117,11 +62,9 @@ class PixelScanner {
 		}
 		// printMask();
 		// printMask();
-		// System.out.println(RecObjHolder.size());
+		System.out.println(RecObjHolder.size());
 
 		PicturePrinter();
-		// printOverImage();
-
 	}
 	private void printMask(){
 		for (int i = 0;i <  image.getWidth(); i++) {
@@ -130,16 +73,30 @@ class PixelScanner {
 			}
 		}
 	}
-	public boolean threshhold(PixelValue pixel, PixelValue lastpixel){ //return true if there is a new color, false otherwise
-		int r = Math.abs(pixel.getRed() - 255);
-		int b = Math.abs(pixel.getBlue() - 255);
-		int g = Math.abs(pixel.getGreen() - 255);
-		if((r >= 200) || (b >= 200) || (g >= 200)){
-			// System.out.println("FF");
+	public boolean threshhold(PixelValue pixel){ //return true if there is a new color, false otherwise
+		if(pixel.getRGB() == -16777216)
 			return true;
-		}
 		return false;
 	}
+	public void threshholdimage(BufferedImage oldImage){
+		PixelValue pixel;
+		BufferedImage newImage = new BufferedImage(oldImage.getWidth(), oldImage.getHeight(),BufferedImage.TYPE_BYTE_BINARY); 
+		for (int i = 0; i < oldImage.getWidth(); i++) {
+			for (int j = 0; j < oldImage.getHeight(); j++) {
+				pixel = new PixelValue(oldImage,i,j);
+				int r = Math.abs(255 - pixel.getRed());
+				int b = Math.abs(255 - pixel.getBlue());
+				int g = Math.abs(255 - pixel.getGreen());
+				if((r >= 200) || (b >= 200) || (g >= 200)){//black
+					newImage.setRGB(i, j, Color.BLACK.getRGB());
+				}else{//white
+					newImage.setRGB(i, j, Color.WHITE.getRGB());
+				}
+			}
+		}
+		this.image = newImage;
+	}
+	
 	public void printOverImage(){
 		// BufferedImage imag = ImageIO.read(pic);
 		// imag = ImageIO.read(pic);
@@ -193,32 +150,46 @@ class PixelScanner {
 		File pic;
 		BufferedImage bufferedImage;
 		String name = "test";
-		try{
-			for(int i = 0; i < RecObjHolder.size(); i++){
-				bufferedImage = new BufferedImage(maxWidth+1, maxHeight+1, BufferedImage.TYPE_INT_RGB);
-				for(int v = 0; v < maxWidth+1; v++){
-					for(int u = 0; u < maxWidth+1; u++){
-						int RGBnumx = (255<<24) | (255<<16) | (255<<8) | 255;
-						bufferedImage.setRGB(v,u,RGBnumx);
-					}
+		for(int i = 0; i < RecObjHolder.size(); i++){
+			bufferedImage = new BufferedImage(maxWidth+1, maxHeight+1, BufferedImage.TYPE_BYTE_BINARY);
+			for(int v = 0; v < maxWidth+1; v++){
+				for(int u = 0; u < maxWidth+1; u++){
+					int RGBnumx = (255<<24) | (255<<16) | (255<<8) | 255;
+					bufferedImage.setRGB(v,u,RGBnumx);
 				}
-				for (int j = 0;  j < image.getWidth(); j++) {
-					for(int k = 0; k < image.getHeight(); k++){
-						if(mask[j][k] == i+1){
-							int RGBnum = (255<<24) | (0<<16) | (0<<8) | 0;
-							int width = ((maxWidth+1) - (RecObjHolder.get(i).right - RecObjHolder.get(i).left))/2;
-							int height = ((maxWidth+1) - (RecObjHolder.get(i).bot - RecObjHolder.get(i).top))/2;
-							// System.out.println("i:" + i + " " + width + ":" + height);
-							bufferedImage.setRGB(j-RecObjHolder.get(i).left+width, k - RecObjHolder.get(i).top + height, RGBnum);
-						}
-					}
-				}
-				pic = new File("test/" + i);
-      			ImageIO.write(bufferedImage, "jpg", pic);
 			}
-    	}catch(IOException e){
-      		System.out.println(e);
-    	}
+			for (int j = 0;  j < image.getWidth(); j++) {
+				for(int k = 0; k < image.getHeight(); k++){
+					if(mask[j][k] == i+1){
+						int RGBnum = (255<<24) | (0<<16) | (0<<8) | 0;
+						int width = ((maxWidth+1) - (RecObjHolder.get(i).right - RecObjHolder.get(i).left))/2;
+						int height = ((maxWidth+1) - (RecObjHolder.get(i).bot - RecObjHolder.get(i).top))/2;
+						// System.out.println("i:" + i + " " + width + ":" + height);
+						bufferedImage.setRGB(j-RecObjHolder.get(i).left+width, k - RecObjHolder.get(i).top + height, RGBnum);
+					}
+				}
+			}
+			pic = new File("test/" + i);
+
+			// BufferedImage dimg = new BufferedImage(28, 28, bufferedImage.getType()); //problem with this line
+			BufferedImage newImage = new BufferedImage(28, 28, BufferedImage.TYPE_BYTE_BINARY);
+
+			Graphics g = newImage.createGraphics();
+			g.drawImage(bufferedImage, 0, 0, 28, 28, null);
+			g.dispose();
+			int[][] arraysToSendToRichard = new int[28][28];
+			for (int k = 0; k < 28; k++) {
+				for (int j = 0; j < 28; j++) {
+					if(newImage.getRGB(k,j) == -16777216){
+						arraysToSendToRichard[k][j] = 1;
+					}else{
+						arraysToSendToRichard[k][j] = 0;
+					}
+				}
+			}
+			//SEND TO RICHARD HERE
+		}
+		
 	}
 }
 
