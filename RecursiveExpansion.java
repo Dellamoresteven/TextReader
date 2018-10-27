@@ -13,6 +13,7 @@ class RecursiveExpansion {
 	public int bot;
 	public int left; 
 	public int right;
+	// public char letter = '';
 	RecursiveExpansion(BufferedImage oldimage, int [][] maskk, int objCount){
 		this.oldimage = oldimage;
 		newimage = oldimage;

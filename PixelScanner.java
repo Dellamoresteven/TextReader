@@ -22,6 +22,8 @@ class PixelScanner {
 		this.image = image;
 		mask = new int[image.getWidth()][image.getHeight()];
 		startscan();
+		Formater format = new Formater(RecObjHolder,mask,this.image);
+
 	}
 
 	private void startscan(){
@@ -62,7 +64,7 @@ class PixelScanner {
 		}
 		// printMask();
 		// printMask();
-		System.out.println(RecObjHolder.size());
+		// System.out.println(RecObjHolder.size());
 
 		PicturePrinter();
 	}
@@ -87,7 +89,7 @@ class PixelScanner {
 				int r = Math.abs(255 - pixel.getRed());
 				int b = Math.abs(255 - pixel.getBlue());
 				int g = Math.abs(255 - pixel.getGreen());
-				if((r >= 200) || (b >= 200) || (g >= 200)){//black
+				if((r >= 190) || (b >= 190) || (g >= 190)){//black
 					newImage.setRGB(i, j, Color.BLACK.getRGB());
 				}else{//white
 					newImage.setRGB(i, j, Color.WHITE.getRGB());
@@ -124,6 +126,9 @@ class PixelScanner {
       		System.out.println(e);
     	}
 	}
+	/*
+		Sends all the letters to the MI Python. 
+	*/
 	public void PicturePrinter(){
 		// System.out.println(RecObjHolder.get(0).top);
 		// System.out.println(RecObjHolder.get(0).bot);
@@ -165,13 +170,13 @@ class PixelScanner {
 						int width = ((maxWidth+1) - (RecObjHolder.get(i).right - RecObjHolder.get(i).left))/2;
 						int height = ((maxWidth+1) - (RecObjHolder.get(i).bot - RecObjHolder.get(i).top))/2;
 						// System.out.println("i:" + i + " " + width + ":" + height);
-						bufferedImage.setRGB(j-RecObjHolder.get(i).left+width, k - RecObjHolder.get(i).top + height, RGBnum);
+						bufferedImage.setRGB(j - RecObjHolder.get(i).left+width, k - RecObjHolder.get(i).top + height, RGBnum);
 					}
 				}
 			}
 			pic = new File("test/" + i);
 
-			// BufferedImage dimg = new BufferedImage(28, 28, bufferedImage.getType()); //problem with this line
+			BufferedImage dimg = new BufferedImage(28, 28, bufferedImage.getType()); //problem with this line
 			BufferedImage newImage = new BufferedImage(28, 28, BufferedImage.TYPE_BYTE_BINARY);
 
 			Graphics g = newImage.createGraphics();
@@ -180,16 +185,22 @@ class PixelScanner {
 			int[][] arraysToSendToRichard = new int[28][28];
 			for (int k = 0; k < 28; k++) {
 				for (int j = 0; j < 28; j++) {
-					if(newImage.getRGB(k,j) == -16777216){
-						arraysToSendToRichard[k][j] = 1;
-					}else{
+					if(bufferedImage.getRGB(k,j) == -16777216){
 						arraysToSendToRichard[k][j] = 0;
+					}else{
+						arraysToSendToRichard[k][j] = 1;
 					}
 				}
 			}
+			// try{
+			// 	ImageIO.write(bufferedImage, "jpg", pic);
+			// }catch(Exception e){
+
+			// }
 			//SEND TO RICHARD HERE
 		}
-
+		// startFormat(mask);
+		System.out.println("AMOUNT OF STUFF:" + RecObjHolder.size());
 	}
 }
 
