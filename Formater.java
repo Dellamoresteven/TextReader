@@ -105,8 +105,8 @@ class Formater{
 		objRanInto.clear();
 		for (int i = 0; i < format[0].length; i++) {
 			for (int j = 0; j < format.length; j++) {
-				if(format[i][j] != 0){
-					objRanInto.add(format[i][j]);
+				if(format[j][i] != 0){
+					objRanInto.add(format[j][i]);
 					break;
 				}
 			}

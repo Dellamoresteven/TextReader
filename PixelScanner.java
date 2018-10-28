@@ -89,7 +89,7 @@ class PixelScanner {
 				int r = Math.abs(255 - pixel.getRed());
 				int b = Math.abs(255 - pixel.getBlue());
 				int g = Math.abs(255 - pixel.getGreen());
-				if((r >= 190) || (b >= 190) || (g >= 190)){//black
+				if((r >= 140) || (b >= 140) || (g >= 140)){//black
 					newImage.setRGB(i, j, Color.BLACK.getRGB());
 				}else{//white
 					newImage.setRGB(i, j, Color.WHITE.getRGB());
@@ -192,11 +192,11 @@ class PixelScanner {
 					}
 				}
 			}
-			// try{
-			// 	ImageIO.write(bufferedImage, "jpg", pic);
-			// }catch(Exception e){
+			try{
+				ImageIO.write(bufferedImage, "jpg", pic);
+			}catch(Exception e){
 
-			// }
+			}
 			//SEND TO RICHARD HERE
 		}
 		// startFormat(mask);
