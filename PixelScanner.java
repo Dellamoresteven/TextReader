@@ -89,7 +89,7 @@ class PixelScanner {
 				int r = Math.abs(255 - pixel.getRed());
 				int b = Math.abs(255 - pixel.getBlue());
 				int g = Math.abs(255 - pixel.getGreen());
-				if((r >= 140) || (b >= 140) || (g >= 140)){//black
+				if((r >= 120) || (b >= 120) || (g >= 120)){//black
 					newImage.setRGB(i, j, Color.BLACK.getRGB());
 				}else{//white
 					newImage.setRGB(i, j, Color.WHITE.getRGB());
