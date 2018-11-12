@@ -217,21 +217,31 @@ class PixelScanner {
 	public void PicturePrinter(){
 		BufferedImage newImage;
 		for (int i = 1; i <= objnum; i++) {
-			top = mask.length;
+			top = mask[0].length;
 			bot = 0;
 			right = 0;
-			left = mask[0].length;
-			newImage = new BufferedImage(mask[0].length, mask.length,BufferedImage.TYPE_BYTE_BINARY); 
+			left = mask.length;
+			int c = 0;
+			newImage = new BufferedImage(mask[0].length, mask.length,BufferedImage.TYPE_INT_RGB); 
 			for (int j = 0; j < mask.length; j++) {
 				for(int k = 0; k < mask[0].length; k++){
 					if(mask[j][k] == i){
+						c++;
 						newImage.setRGB(k,j,Color.WHITE.getRGB());
 						checkbounds(j,k);
 					}
 				}
 			}
-			if(!(top == 485 && bot == 0)){
-				// System.out.println(i + ":" + top + ":" + bot + ":" + right + ":" + left);
+			if((top < bot) && (c > 40)){
+				for (int j = 0; j < mask.length; j++) {
+					for(int k = 0; k < mask[0].length; k++){
+						if(mask[j][k] == i){
+							c++;
+							newImage.setRGB(k-top,j-left,Color.RED.getRGB()); //up left
+						}
+					}
+				}
+				System.out.println(i + ":" + top + ":" + bot + ":" + right + ":" + left);
 				try{
 					File pic = new File("test/" + i);
 					ImageIO.write(newImage, "jpg", pic);

@@ -10,10 +10,10 @@ class Picture {
 	public static void main(String[] args) {
 		File pic;
 		BufferedImage imag;
-		String name = "image0.jpg";
+		// String name = "image0.jpg";
 		// String name = "oneLetter.jpg";
 		// String name = "IMG_1191.jpeg";
-		// String name = "test.jpeg";
+		String name = "TestImages/image3.jpg";
 		try{
 			pic = new File(name);
 			imag = ImageIO.read(pic);
