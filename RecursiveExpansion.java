@@ -14,6 +14,9 @@ class RecursiveExpansion {
 	public int left; 
 	public int right;
 	// public char letter = '';
+	/*
+	Constructor
+	*/
 	RecursiveExpansion(BufferedImage oldimage, int [][] maskk, int objCount){
 		this.oldimage = oldimage;
 		newimage = oldimage;
@@ -28,14 +31,12 @@ class RecursiveExpansion {
 		right = row;
 		PixelValue pix = new PixelValue(newimage,row,col);
 		lastpixel = pix; 
-		// System.out.println("LAST PIXL: RED:" + lastpixel.getRed() + " GREEN:" + lastpixel.getGreen() + " BLUE:" + lastpixel.getBlue());
-
-		// System.out.println(pix.getRed());
 		FindSize(row,col);
-		// printMask();
 		return mask;
 	}
-
+	/*
+	Test to print my array, used for debugging"
+	*/
 	private void printMask(){
 		for (int i = 0;i <  oldimage.getWidth(); i++) {
 			for (int j = 0; j < oldimage.getHeight(); j++) {
@@ -44,6 +45,9 @@ class RecursiveExpansion {
 			}
 		}
 	}
+	/*
+	Checks for bot,top,left,right of the object so we can resize before sending
+	*/
 	public void check(int row, int col){
 		if(top > col){
 			top = col;
@@ -55,6 +59,9 @@ class RecursiveExpansion {
 			left = row;
 		}
 	}
+	/*
+	Go through too many times when going through letters....
+	*/
 	public void FindSize(int row, int col){
 		
 		// System.out.println(oldimage.getWidth() + ":" + oldimage.getHeight());
@@ -71,7 +78,7 @@ class RecursiveExpansion {
 			return;
 		}
 		check(row, col);
-		// System.out.println(row + ":" + col);
+		System.out.println(row + ":" + col);
 		// System.out.println("RED:" + pixel.getRed() + " GREEN:" + pixel.getGreen() + " BLUE:" + pixel.getBlue());
 		mask[row][col] = objCount;
 		// System.out.println(row + ":" + col);
@@ -84,17 +91,15 @@ class RecursiveExpansion {
 		FindSize(row, col + 1);
 		// System.out.println("AAAAAAA");
 		FindSize(row, col - 1);
-			// FindSize(row + 1, col + 1, threshhold);
-			// FindSize(row + 1, col - 1, threshhold);
-			// FindSize(row - 1, col + 1, threshhold);
-			// FindSize(row - 1, col - 1, threshhold);
 	}
+	/* 
+	Checks if black and white
+	*/
 	public boolean threshholds(PixelValue pixel){ //return true if there is a new color, false otherwise
 		if(pixel.getRGB() == -16777216)
 			return false;
 		return true;
 	}
-
 }
 
 

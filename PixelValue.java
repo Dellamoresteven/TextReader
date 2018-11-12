@@ -17,7 +17,6 @@ class PixelValue {
 		this.row = row;
 		this.col = col;
 	}
-
 	public int getRGB(){
 		return RGBnum;
 	}

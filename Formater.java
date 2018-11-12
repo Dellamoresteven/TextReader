@@ -111,7 +111,7 @@ class Formater{
 				}
 			}
 		}
-		// printToPic();
+		printToPic();
 		System.out.println(objRanInto);
 		// for (int i = 0; i ; ) {
 			
